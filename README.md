@@ -25,3 +25,24 @@ Backend for teamdev project
 Total reclaimed space: 0B
 
 ```
+
+## Creating mongo models
+
+```csharp
+using Database;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Backend.Models;
+
+[Model("hello")] // Model annotation containing mongo collection name. MUST BE ADDED TO EACH MODEL!!!
+public class HelloModel
+{
+    // Optional Id field, add it only if u need it
+    [BsonId] public ObjectId Id { get; set; }
+    
+    // Payload fields
+    public string Message { get; set; }
+}
+
+```
