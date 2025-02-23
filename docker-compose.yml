@@ -1,0 +1,28 @@
+version: "3"
+
+networks:
+  backend:
+
+services:
+  mongo:
+    image: mongo
+    restart: on-failure
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend
+
+  server:
+    build: .
+    volumes:
+      - ./Backend/appsettings.json:/appsettings.json
+    networks:
+      - backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongo:
+        condition: service_healthy
