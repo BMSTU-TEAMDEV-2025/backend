@@ -8,8 +8,15 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("/")]
-public class HelloController(IRepository<ObjectId, HelloModel> hellos) : ControllerBase
+public class HelloController : ControllerBase
 {
+    private readonly IRepository<ObjectId, HelloModel> _hellos;
+
+    public HelloController(IRepository<ObjectId, HelloModel> hellos)
+    {
+        _hellos = hellos;
+    }
+    
     [HttpGet("/hello")]
     public string SayHello()
     {
@@ -19,7 +26,7 @@ public class HelloController(IRepository<ObjectId, HelloModel> hellos) : Control
     [HttpGet("/hello/{id}")]
     public HelloDto? GetHello(ObjectId id)
     {
-        var found = hellos.Find(id);
+        var found = _hellos.Find(id);
         if (found == null)
         {
             Response.StatusCode = 404;
@@ -35,7 +42,7 @@ public class HelloController(IRepository<ObjectId, HelloModel> hellos) : Control
         {
             Message = dto.Message,
         };
-        hellos.Put(model);
+        _hellos.Put(model);
         return new IdDto
         {
             Id = model.Id.ToString(),
