@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Database;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Mongo;
 
@@ -21,5 +22,11 @@ public class MongoFactory(IMongoClient client) : AbstractDatabaseFactory<ObjectI
             BsonClassMap.RegisterClassMap(map);
         }
         return ret;
+    }
+
+    protected override void Register<TKey, TValue>(IDatabase<TKey> database, string name, IServiceCollection services)
+    {
+        var repository = database.Create<TValue>(name);
+        services.AddSingleton(repository);
     }
 }

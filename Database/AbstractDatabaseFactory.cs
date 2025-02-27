@@ -5,11 +5,13 @@ namespace Database;
 
 public abstract class AbstractDatabaseFactory<TK> : IDatabaseFactory<TK>
 {
-    private const BindingFlags Flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy;
+    private const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
 
     private readonly Type _type = typeof(AbstractDatabaseFactory<TK>);
 
     public abstract IDatabase<TK> Create(string name, IDictionary<string, Type> types);
+
+    protected abstract void Register<TKey, TValue>(IDatabase<TKey> database, string name, IServiceCollection services);
 
     public IDatabase<TK> CreateAndRegisterTypes(string name, Assembly assembly, IServiceCollection services)
     {
@@ -27,17 +29,11 @@ public abstract class AbstractDatabaseFactory<TK> : IDatabaseFactory<TK>
         var ret = Create(name, types);
         foreach (var entry in types)
         {
-            var method = _type.GetMethod("RegisterRepository", Flags)
-                ?.MakeGenericMethod(typeof(TK), entry.Value);
-            method?.Invoke(null, [ret, entry.Key, services]);
+            var method = _type.GetMethod("Register", Flags);
+            var generic = method!.MakeGenericMethod(typeof(TK), entry.Value);
+            generic.Invoke(this, [ret, entry.Key, services]);
         }
 
         return ret;
-    }
-
-    private static void RegisterRepository<TKey, TValue>(IDatabase<TKey> database, string name, IServiceCollection di)
-    {
-        var adapter = database.Create<TValue>(name);
-        di.AddSingleton(adapter);
     }
 }

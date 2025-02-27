@@ -28,6 +28,8 @@ Total reclaimed space: 0B
 
 ## Creating mongo models
 
+First, create model class:
+
 ```csharp
 using Database;
 using MongoDB.Bson;
@@ -43,6 +45,24 @@ public class HelloModel
     
     // Payload fields
     public string Message { get; set; }
+}
+
+```
+
+Now you can request repository instance from di container:
+
+```csharp
+[ApiController]
+[Route("/")]
+public class HelloController : ControllerBase
+{
+    private readonly IRepository<ObjectId, HelloModel> _hellos;
+
+    public HelloController(IRepository<ObjectId, HelloModel> hellos)
+    {
+        _hellos = hellos;
+    }
+    ...
 }
 
 ```
