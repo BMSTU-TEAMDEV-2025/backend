@@ -1,4 +1,7 @@
-﻿# Created by https://www.toptal.com/developers/gitignore/api/csharp,aspnetcore
+﻿# Mongo run scripts
+mongo.id
+
+# Created by https://www.toptal.com/developers/gitignore/api/csharp,aspnetcore
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp,aspnetcore
 
 ### ASPNETCore ###

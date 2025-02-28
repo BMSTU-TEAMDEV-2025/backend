@@ -1,6 +1,19 @@
 # backend
 Backend for teamdev project
 
+## Running and stopping mongo for dev environment
+
+```
+\backend>start_mongo.bat
+\backend>stop_mongo.bat
+```
+
+To completely drop container with running mongo:
+
+```
+\backend>stop_mongo.bat -d
+```
+
 ## Deploying app
 
 ```
