@@ -8,11 +8,16 @@ if not exist "mongo.id" (
 
 set /p id=<mongo.id
 
+if "%id%"=="" (
+    del mongo.id
+    echo No mongo.id
+    exit /b 1
+)
+
 if "%~1"=="-d" (
     del mongo.id
     docker stop %id% >nul 2>&1
-    docker rm -f %id% >nul 2>&1
-    docker volume prune -f >nul 2>&1
+    docker rm -v -f %id% >nul 2>&1
     exit /b 0
 )
 
