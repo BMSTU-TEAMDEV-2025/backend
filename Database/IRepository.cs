@@ -1,12 +1,12 @@
 ﻿namespace Database;
 
-public interface IRepository<in TK, TV>
+public interface IRepository<in TK, TV> where TV : IModel<TK>
 {
     void Put(TV model);
 
     void Put(IEnumerable<TV> entities);
 
-    void Update(TK key, TV model);
+    void Update(TV model);
 
     TV? Find(TK key);
 

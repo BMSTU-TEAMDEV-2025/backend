@@ -1,12 +1,11 @@
 ﻿using Database;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Mongo;
 
-public class MongoDatabase(IMongoDatabase database) : IDatabase<ObjectId>
+public class MongoDatabase(IMongoDatabase database) : IDatabase<string>
 {
-    public IRepository<ObjectId, TV> Create<TV>(string name)
+    public IRepository<string, TV> Create<TV>(string name) where TV : IModel<string>
     {
         var collection = database.GetCollection<TV>(name);
         return new MongoRepository<TV>(collection);

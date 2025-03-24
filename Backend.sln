@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{E1C964C0-53FC-45C9-8015-513424879B77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpServer", "HttpServer\HttpServer.csproj", "{E1C964C0-53FC-45C9-8015-513424879B77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{233F7784-59C0-4FED-A316-C2A49A3D1480}"
 	ProjectSection(SolutionItems) = preProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{6BF50455-82DA-4C90-BCAB-8CE0CB9EDF35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mongo", "Mongo\Mongo.csproj", "{6EB0ED28-6EA3-450A-ADE8-E567A759C6E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{F936E4E4-3CAA-457B-82E7-BBE94A0460B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{DF3768FD-4981-4BA0-96D3-6F9529859D7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,5 +33,13 @@ Global
 		{6EB0ED28-6EA3-450A-ADE8-E567A759C6E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EB0ED28-6EA3-450A-ADE8-E567A759C6E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EB0ED28-6EA3-450A-ADE8-E567A759C6E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F936E4E4-3CAA-457B-82E7-BBE94A0460B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F936E4E4-3CAA-457B-82E7-BBE94A0460B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F936E4E4-3CAA-457B-82E7-BBE94A0460B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F936E4E4-3CAA-457B-82E7-BBE94A0460B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF3768FD-4981-4BA0-96D3-6F9529859D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3768FD-4981-4BA0-96D3-6F9529859D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3768FD-4981-4BA0-96D3-6F9529859D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3768FD-4981-4BA0-96D3-6F9529859D7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

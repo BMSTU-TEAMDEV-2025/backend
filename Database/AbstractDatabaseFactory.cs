@@ -11,7 +11,7 @@ public abstract class AbstractDatabaseFactory<TK> : IDatabaseFactory<TK>
 
     public abstract IDatabase<TK> Create(string name, IDictionary<string, Type> types);
 
-    protected abstract void Register<TKey, TValue>(IDatabase<TKey> database, string name, IServiceCollection services);
+    protected abstract void Register<TValue>(IDatabase<TK> database, string name, IServiceCollection services) where TValue : IModel<TK>;
 
     public IDatabase<TK> CreateAndRegisterTypes(string name, Assembly assembly, IServiceCollection services)
     {
@@ -19,6 +19,8 @@ public abstract class AbstractDatabaseFactory<TK> : IDatabaseFactory<TK>
         // Find all annotated models
         foreach (var type in assembly.GetTypes())
         {
+            if (!type.IsAssignableTo(typeof(IModel<TK>))) continue;
+            
             var found = type.GetCustomAttributes(typeof(ModelAttribute), false);
             if (found.Length == 0) continue;
 
@@ -30,7 +32,7 @@ public abstract class AbstractDatabaseFactory<TK> : IDatabaseFactory<TK>
         foreach (var entry in types)
         {
             var method = _type.GetMethod("Register", Flags);
-            var generic = method!.MakeGenericMethod(typeof(TK), entry.Value);
+            var generic = method!.MakeGenericMethod(entry.Value);
             generic.Invoke(this, [ret, entry.Key, services]);
         }
 
