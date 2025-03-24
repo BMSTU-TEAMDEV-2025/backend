@@ -1,4 +1,4 @@
-﻿using Backend.Models;
+﻿using Core.Models;
 
 namespace Backend.Dtos;
 

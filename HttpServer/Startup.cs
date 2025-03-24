@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using Core.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Mongo.Extensions;
+using Services;
 
 namespace Backend;
 
@@ -24,7 +26,9 @@ public class Startup(IConfiguration configuration)
                 });
         });
         
-        services.AddMongoService(Configuration, Assembly.GetExecutingAssembly());
+        services.AddMongoService(Configuration, Assembly.Load("Core"));
+
+        services.AddSingleton<IHelloService, HelloService>();
         
         services.AddControllers();
         

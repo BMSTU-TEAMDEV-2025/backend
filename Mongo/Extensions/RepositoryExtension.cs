@@ -5,27 +5,27 @@ namespace Mongo.Extensions;
 
 public static class RepositoryExtension
 {
-    public static IEnumerable<TV> Filter<TK, TV>(this IRepository<TK, TV> adapter, FilterDefinition<TV> filter)
+    public static IEnumerable<TV> Filter<TV>(this IRepository<string, TV> adapter, FilterDefinition<TV> filter) where TV : IModel<string>
     {
         return ((MongoRepository<TV>) adapter).Filter(filter);
     }
 
-    public static TV? FindFirst<TK, TV>(this IRepository<TK, TV> adapter, FilterDefinition<TV> filter)
+    public static TV? FindFirst<TV>(this IRepository<string, TV> adapter, FilterDefinition<TV> filter) where TV : IModel<string>
     {
         return ((MongoRepository<TV>) adapter).FindFirst(filter);
     }
 
-    public static long Count<TK, TV>(this IRepository<TK, TV> adapter, FilterDefinition<TV> filter)
+    public static long Count<TV>(this IRepository<string, TV> adapter, FilterDefinition<TV> filter) where TV : IModel<string>
     {
         return ((MongoRepository<TV>) adapter).Count(filter);
     }
 
-    public static bool DeleteFirst<TK, TV>(this IRepository<TK, TV> adapter, FilterDefinition<TV> filter)
+    public static bool DeleteFirst<TV>(this IRepository<string, TV> adapter, FilterDefinition<TV> filter) where TV : IModel<string>
     {
         return ((MongoRepository<TV>) adapter).DeleteFirst(filter);
     }
 
-    public static long DeleteAll<TK, TV>(this IRepository<TK, TV> adapter, FilterDefinition<TV> filter)
+    public static long DeleteAll<TV>(this IRepository<string, TV> adapter, FilterDefinition<TV> filter) where TV : IModel<string>
     {
         return ((MongoRepository<TV>) adapter).DeleteAll(filter);
     }
