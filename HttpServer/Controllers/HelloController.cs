@@ -14,7 +14,7 @@ public class HelloController : ControllerBase
     public HelloController(IHelloService hellos)
     {
         _hellos = hellos;
-    }
+    } 
     
     [HttpGet("/hello")]
     public string SayHello()
