@@ -1,16 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Backend.Dtos;
+using Backend.Dtos.User;
 using Core.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 
+namespace Backend.Controllers;
+
 [ApiController]
-[Route("api/auth")]
+[Route("/")]
 public class AuthController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -27,8 +28,8 @@ public class AuthController : ControllerBase
         _logger = logger;
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterUserDto model)
+    [HttpPost("/register")]
+    public IActionResult Register([FromBody] RegisterUserDto model)
     {
         try
         {
@@ -48,9 +49,9 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpPost("login")]
+    [HttpPost("/login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Login([FromBody] LoginUserDto user)
+    public IActionResult Login([FromBody] LoginUserDto user)
     {
         try
         {
@@ -67,7 +68,6 @@ public class AuthController : ControllerBase
             {
                 Token = token,
                 UserId = existedUser.Id,
-                Email = existedUser.Email
             });
         }
         catch (Exception ex)
@@ -79,8 +79,8 @@ public class AuthController : ControllerBase
 
     private string GenerateJwtToken(User user)
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            _configuration["Jwt:Key"]));
+        var bytes = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!);
+        var securityKey = new SymmetricSecurityKey(bytes);
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]

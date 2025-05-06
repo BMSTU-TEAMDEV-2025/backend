@@ -1,12 +1,13 @@
-﻿using Backend.Dtos;
-using Core.Models;
+﻿using System.Security.Claims;
+using Backend.Dtos.User;
 using Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers;
 
 [ApiController]
-[Route("/")]
+[Route("/users")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _usersService;
@@ -15,22 +16,29 @@ public class UsersController : ControllerBase
     {
         _usersService = usersService;
     }
-    
-    [HttpGet("/users/{id}")]
-    public GetUserDto? GetUsers(string id)
+
+    private string GetUserId()
     {
+        return User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+    }
+
+    [HttpGet]
+    [Authorize]
+    public GetUserDto? GetSelf()
+    {
+        var id = GetUserId();
         var found = _usersService.GetUser(id);
         if (found != null) return GetUserDto.Of(found);
         Response.StatusCode = 404;
         return null;
     }
     
-    [HttpPost("/users")]
-    public IdDto PostUser(PostUserDto dto)
+    [HttpGet("/{id}")]
+    public GetUserDto? GetUser(string id)
     {
-        return new IdDto
-        {
-            Id = _usersService.PutUser(dto.Email, dto.Password)
-        };
+        var found = _usersService.GetUser(id);
+        if (found != null) return GetUserDto.Of(found);
+        Response.StatusCode = 404;
+        return null;
     }
 }

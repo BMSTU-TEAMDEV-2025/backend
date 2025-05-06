@@ -33,6 +33,7 @@ public class Startup(IConfiguration configuration)
 
         services.AddSingleton<IHelloService, HelloService>();
         services.AddSingleton<IUserService, UserService>();
+        services.AddSingleton<ISessionService, SessionService>();
         
         services.AddControllers();
         
@@ -41,7 +42,8 @@ public class Startup(IConfiguration configuration)
         
         services.AddOptions();
         
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -52,8 +54,7 @@ public class Startup(IConfiguration configuration)
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     ValidAudience = Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]!))
                 };
             });
     }
@@ -76,6 +77,5 @@ public class Startup(IConfiguration configuration)
         app.UseCors();
         
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-        
     }
 }

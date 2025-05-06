@@ -4,9 +4,7 @@ namespace Core.Services;
 
 public interface IUserService
 {
-    User GetUser(string id);
-    
-    // List<User> GetUsersAsync();
+    User? GetUser(string id);
 
     string PutUser(string email, string password);
 
