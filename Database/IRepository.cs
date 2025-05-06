@@ -1,4 +1,6 @@
-﻿namespace Database;
+﻿using MongoDB.Driver;
+
+namespace Database;
 
 public interface IRepository<in TK, TV> where TV : IModel<TK>
 {
@@ -9,6 +11,8 @@ public interface IRepository<in TK, TV> where TV : IModel<TK>
     void Update(TV model);
 
     TV? Find(TK key);
+
+    // public IEnumerable<TV> Filter(FilterDefinition<TV> filter);
 
     IEnumerable<TV> FindAll(IEnumerable<TK> keys);
 
